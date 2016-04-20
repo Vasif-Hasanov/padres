@@ -154,6 +154,7 @@ public class TestClients extends Assert {
         AdvertisementMessage advMsg = new AdvertisementMessage(adv, brokerCore.getNewMessageID(),
                 mdB);
         brokerCore.routeMessage(advMsg, MessageDestination.INPUTQUEUE);
+        
 
         Subscription sub = MessageFactory.createSubscriptionFromString("[class,eq,'stock'],[price,=,100.3]");
         SubscriptionMessage subMsg = new SubscriptionMessage(sub, brokerCore.getNewMessageID(), mdA);

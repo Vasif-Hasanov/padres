@@ -63,8 +63,8 @@ public class TimerStockPublisher extends Client {
 		try {
 			ClientConfig newConfig = new ClientConfig();
 			newConfig.clientID = id;
-			newConfig.connectBrokerList = new String[1];
-			newConfig.connectBrokerList[0] = brokerURI;
+			newConfig.connectBrokerList.add(new String("1"));
+			newConfig.connectBrokerList.set(0,brokerURI)  ;
 			new TimerStockPublisher(newConfig, id, brokerURI, delay);
 		} catch (ClientException e) {
 			e.printStackTrace();

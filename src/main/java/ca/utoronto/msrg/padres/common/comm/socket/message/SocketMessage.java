@@ -21,7 +21,10 @@ public class SocketMessage implements Serializable {
 	}
 	
 	public String toString() {
+		System.out.println("SocketMessage.java . msgType =  "+msgType.toString());
+		
 		return msgType.toString();
 	}
+	public String compressionType;
 
 }

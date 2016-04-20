@@ -1,1 +1,22 @@
 test
+
+I had error -- 
+ “Plugin execution not covered by lifecycle configuration .........  ” 
+ after adding <pluginManagement> tag , error disappeared 
+ 
+ 
+ -----------------
+ NOTES
+ -----------------
+ Option -uri is used to specify the URI of the broker and option -n is to specify the neighbors.
+• A broker URI must have the format of <comm protocol>://<hostname>:<port>/<broker id>.
+The comm protocol can be either ‘rmi’ or ‘socket’; hostname can be the DNS name or the IP address
+of the machine where the broker is instantiated; port is the port number where the broker is listening
+at for incoming connections; and broker id is the unique identifier of the broker.
+• Only one broker can listen at a particular port of a given host.
+• Broker ID must be unique and should not contain the ‘-’ (hyphen) character.
+• The neighbors are given in a comma separated (with no space) list of broker URIs.
+• When two brokers are connected in the overlay, it is enough to specify the neighborhood relation only
+at one side (in the above example, only BrokerA uses the -n option).
+• There is no stipulated order in which the brokers have to be started. Brokers will detect whether the
+specified neighbors are alive by periodically sending connection requests.

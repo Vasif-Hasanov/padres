@@ -88,6 +88,7 @@ public abstract class Message implements Serializable, Comparable<Message> {
 		traceRouteID = "dummy";
 		previousBrokerID = "dummy";
 		previousClientID = "dummy";
+		//System.out.println("Message.java ; Message type = "+type+" messageID = "+messageID);
 	}
 
 	/**

@@ -13,17 +13,18 @@ h1 {
 	color: #000066;
 }
 
-input[type="text"],input[type="label"],input[type="file"],select,textarea
-	{
+input[type="text"], input[type="label"], input[type="file"], select,
+	textarea {
 	width: 100%;
 }
 
-input[type="text"],input[type="label"],input[type="file"],input[type="button"],select
-	{
+input[type="text"], input[type="label"], input[type="file"], input[type="button"],
+	select {
 	height: 20px;
 }
 
-input[type="text"],input[type="checkbox"],input[type="file"],textarea {
+input[type="text"], input[type="checkbox"], input[type="file"], textarea
+	{
 	border: solid 1px #aaaaaa;
 	background-color: #ffffff;
 }
@@ -212,13 +213,13 @@ img {
 	color: #000066;
 }
 
-#advertisement_panel_open,#subscription_panel_open,#publication_panel_open
-	{
+#advertisement_panel_open, #subscription_panel_open,
+	#publication_panel_open {
 	width: 30%;
 }
 
-#adv_advanced_panel_open,#sub_advanced_panel_open,#pub_advanced_panel_open
-	{
+#adv_advanced_panel_open, #sub_advanced_panel_open,
+	#pub_advanced_panel_open {
 	width: 40%;
 }
 
@@ -230,7 +231,7 @@ img {
 	width: 40%
 }
 
-#advertisement_text,#subscription_text,#publication_text {
+#advertisement_text, #subscription_text, #publication_text {
 	height: 30%;
 }
 
@@ -269,7 +270,7 @@ img {
 	color: #000099;
 }
 
-#pagetitle,#title_spacing {
+#pagetitle, #title_spacing {
 	font-size: 30;
 	font-weight: bold;
 	color: #009900;

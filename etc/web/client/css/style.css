@@ -91,7 +91,7 @@ select {
 	font-weight: bold;
 }
 
-#activity_area,#notify_area {
+#activity_area, #notify_area {
 	width: 680px;
 	height: 250px;
 	border: solid 1px #333;

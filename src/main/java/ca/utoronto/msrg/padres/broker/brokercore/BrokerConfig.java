@@ -113,6 +113,7 @@ public class BrokerConfig {
 	protected boolean pubConformCheck = true;
 
 	protected boolean heartBeat = false;
+	protected boolean compression=false;
 
 	protected boolean msgTrace = false;
 

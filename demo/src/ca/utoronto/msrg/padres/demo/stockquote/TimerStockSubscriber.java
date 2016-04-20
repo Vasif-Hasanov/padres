@@ -42,8 +42,8 @@ public class TimerStockSubscriber extends Client {
 		try {
 			ClientConfig newConfig = new ClientConfig();
 			newConfig.clientID = id;
-			newConfig.connectBrokerList = new String[1];
-			newConfig.connectBrokerList[0] = brokerURI;
+			newConfig.connectBrokerList.add(args[1]);
+			newConfig.connectBrokerList.set(0, brokerURI);
 			new TimerStockSubscriber(newConfig, id, brokerURI);
 		} catch (ClientException e) {
 			e.printStackTrace();

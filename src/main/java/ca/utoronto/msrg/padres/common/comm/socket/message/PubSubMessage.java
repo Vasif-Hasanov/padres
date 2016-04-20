@@ -30,6 +30,8 @@ public class PubSubMessage extends SocketMessage {
 	}
 
 	public String toString() {
+		System.out.println("PubSubMessage.java = "+String.format("[%s] from %s:  %s", msgType.toString(), sourceHostType.toString(),
+				message));
 		return String.format("[%s] from %s:  %s", msgType.toString(), sourceHostType.toString(),
 				message);
 	}

@@ -42,8 +42,7 @@ public class Predicate implements Serializable {
 	// Allowed: less than ("<"), less than or equal to ("<="), equal to ("="),
 	// greater than or equal to (">="),
 	// greater than (">"), not equal to ("<>")
-	static private String[] validNumberOperatorsArray = new String[] { "<", "<=", "=", ">=", ">",
-			"<>", "isPresent" };
+	static private String[] validNumberOperatorsArray = new String[] { "<", "<=", "=", ">=", ">", "<>", "isPresent" };
 
 	static private List<String> validNumberOperators = Arrays.asList(validNumberOperatorsArray);
 
@@ -52,8 +51,8 @@ public class Predicate implements Serializable {
 	// ("eq"), greater than or equal to ("str-ge"),
 	// greater than ("str-gt"), not equal to ("neq"), contains ("str-contains"),
 	// is within ("str-index")
-	static private String[] validStringOperatorsArray = new String[] { "str-lt", "str-le", "eq",
-			"str-ge", "str-gt", "neq", "str-contains", "str-prefix", "str-postfix", "isPresent" };
+	static private String[] validStringOperatorsArray = new String[] { "str-lt", "str-le", "eq", "str-ge", "str-gt",
+			"neq", "str-contains", "str-prefix", "str-postfix", "isPresent" };
 
 	static private List<String> validStringOperators = Arrays.asList(validStringOperatorsArray);
 

@@ -190,10 +190,11 @@ public class GUIClient extends Client implements ActionListener {
 
 	protected void connectToBroker() {
 		String brokerURI = JOptionPane.showInputDialog(mainWindow, "Connect to Broker",
-				"rmi://localhost:1099/Broker1");
+				"socket://localhost:3000/BrokerA");
 		if (brokerURI != null) {
 			try {
 				printClientAction("Connecting to broker: " + brokerURI + " ...", Color.BLACK);
+				//System.out.println("Connecting to broker: " + brokerURI);
 				BrokerState brokerState = connect(brokerURI);
 				String result = String.format("Connected to %s",
 						brokerState.getBrokerAddress().getNodeURI());
@@ -225,7 +226,9 @@ public class GUIClient extends Client implements ActionListener {
 	protected void processUserInput() {
 		CommandResult results;
 		try {
-			results = handleCommand(input.getText());
+		
+			String text = input.getText();
+			results = handleCommand(text);
 		} catch (ParseException e) {
 			e.printStackTrace();
 			exceptionLogger.error(e);

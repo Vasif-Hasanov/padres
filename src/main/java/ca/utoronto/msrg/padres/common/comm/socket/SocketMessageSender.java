@@ -87,6 +87,8 @@ public class SocketMessageSender extends MessageSender {
 		socketPipe.write(new ConnectMessage(HostType.SERVER, null));
 		// Receive the server's ID string
 		ConnectReplyMessage replyMsg = (ConnectReplyMessage) socketPipe.read();
+		System.out.println("------------ SocketMessageSender.java;connect()------------");
+		System.out.println("ConnectReplyMessage = "+replyMsg.getServerID());
 		setID(replyMsg.getServerID());
 	}
 
@@ -112,6 +114,7 @@ public class SocketMessageSender extends MessageSender {
 	 * Connect method that is called by both overloaded connect methods.
 	 */
 	public void createConnection() throws CommunicationException {
+		System.out.println("SocketMessageSender.createConnection()");
 		SocketAddress socketAddress = (SocketAddress) remoteServerAddress;
 		commSysLogger.info("Connecting to remote broker " + socketAddress.getNodeID());
 		int tryCount = 0;
@@ -171,7 +174,11 @@ public class SocketMessageSender extends MessageSender {
 		commSysLogger.debug("Sending message : " + msg.toString()
 				+ " to remote server with destination " + msg.getNextHopID() + ".");
 		if (socketPipe != null) {
-			socketPipe.write(new PubSubMessage(msg, sourceHostType));
+			if(compressors!=null&&compressors.length>0)
+			socketPipe.write(new PubSubMessage(msg, sourceHostType),compressors);
+			else {
+				socketPipe.write(new PubSubMessage(msg, sourceHostType));
+			}
 		} else {
 			throw new CommunicationException("Remote entity has not been initialized");
 		}
@@ -189,7 +196,8 @@ public class SocketMessageSender extends MessageSender {
 			}
 			waitingForNotify = false;
 			return sendToReturnVal;
-		} else {
+		}
+		else {
 			return msg.getMessageID();
 		}
 	}

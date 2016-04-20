@@ -90,7 +90,7 @@ public class StockSubscriber extends StockClient {
 	public StockSubscriber(ClientConfig clientConfig, String strSubscription)
 			throws ClientException {
 		super(clientConfig);
-		brokerId = clientConfig.connectBrokerList[0];
+		brokerId = clientConfig.connectBrokerList.get(0);
 		// send subscriptions
 		sendSubscriptions(strSubscription);
 		// duplicate detection stuff
@@ -349,7 +349,7 @@ public class StockSubscriber extends StockClient {
 				showUsage();
 				System.exit(1);
 			} else if (clientConfig.connectBrokerList == null
-					|| clientConfig.connectBrokerList.length == 0) {
+					|| clientConfig.connectBrokerList.size() == 0) {
 				logger.fatal("Don't know which broker to connect to.");
 				showUsage();
 				System.exit(1);

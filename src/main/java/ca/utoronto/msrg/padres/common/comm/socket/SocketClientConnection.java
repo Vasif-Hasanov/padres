@@ -161,6 +161,7 @@ public class SocketClientConnection extends Thread {
 				 * This will only ever occur when we are a client.
 				 */
 				if (socketMsg.getMessageType() == SocketMessageType.PUB_SUB_REPLY) {
+					
 					senderCallBack.messageIDReceived(((PubSubReplyMessage) socketMsg).getMessageID());
 					continue;
 				}
@@ -171,6 +172,7 @@ public class SocketClientConnection extends Thread {
 				if (socketMsg.getMessageType() == SocketMessageType.PUB_SUB) {
 					PubSubMessage pubSubSocketMsg = (PubSubMessage) socketMsg;
 					Message pubSubMsg = pubSubSocketMsg.getMessage();
+					System.out.println("SocketClientConnection. pubSubMsg.getMessageID() = "+pubSubMsg.getMessageID());
 					notifyMessageListeners(pubSubMsg, pubSubSocketMsg.getHostType());
 					// Send back the messageID if we are a server and connected to a client
 					if (serverConnection && !connectedToServer

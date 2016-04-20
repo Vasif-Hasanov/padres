@@ -12,6 +12,7 @@ public class PubSubReplyMessage extends SocketMessage {
 	}
 
 	public String getMessageID() {
+		System.out.println("PubSubReplyMessage.java . getMessageID() = "+msgID);
 		return msgID;
 	}
 

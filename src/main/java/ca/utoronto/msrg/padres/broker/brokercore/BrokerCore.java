@@ -118,13 +118,16 @@ public class BrokerCore {
 		if (args == null) {
 			throw new BrokerCoreException("Null arguments");
 		}
-		CommandLine cmdLine = new CommandLine(BrokerConfig.getCommandLineKeys());
+		String[] commandLineKeys = BrokerConfig.getCommandLineKeys();
+		CommandLine cmdLine = new CommandLine(commandLineKeys);
 		try {
 			cmdLine.processCommandLine(args);
 		} catch (Exception e) {
 			throw new BrokerCoreException("Error processing command line", e);
 		}
 		// make sure the logger is initialized before everything else
+
+		String logPath = cmdLine.getOptionValue(BrokerConfig.CMD_ARG_FLAG_LOG_LOCATION);
 		initLog(cmdLine.getOptionValue(BrokerConfig.CMD_ARG_FLAG_LOG_LOCATION));
 		brokerCoreLogger.debug("BrokerCore is starting.");
 		// load properties from given/default properties file get the broker configuration

@@ -76,6 +76,11 @@ public class BaseCommandHandler extends CommandHandler {
 
 	@Override
 	public void runCommand(CommandResult cmd) throws ParseException {
+		// cmd.cmdData[0]  is the actual data part of the message to send consumers. 
+		// For example cmd.cmdData[0]= [class,eq,'stock1'],[name,eq,'IBM1'],[price,>,80]
+		// our actual command is as follow: a [class,eq,'stock1'],[name,eq,'IBM1'],[price,>,80]
+		// here a is alias for the command "adv".
+		client.setCompressionType(cmd.compressionType);
 		if (commandAlias.containsKey(cmd.command))
 			cmd.command = commandAlias.get(cmd.command);
 		try {
@@ -84,6 +89,7 @@ public class BaseCommandHandler extends CommandHandler {
 						|| cmd.cmdData[0].trim().equals(""))
 					throw new ClientException("Client ID is not provided");
 				client.setClientID(cmd.cmdData[0]);
+				System.out.println("BaseCommandHandler.java line 92. client.setClientID(cmd.cmdData[0])="+cmd.cmdData[0]);
 			} else if (cmd.command.equals("exit")) {
 				cmd.resString = "exiting...";
 				// do nothing specific
@@ -98,55 +104,42 @@ public class BaseCommandHandler extends CommandHandler {
 			} else if (cmd.command.equals("printsubs")) {
 				printSubscriptions(cmd);
 			} else if (cmd.command.equals("connect")) {
-				if (cmd.cmdData == null || cmd.cmdData.length == 0
-						|| cmd.cmdData[0].trim().equals(""))
+				if (cmd.cmdData == null || cmd.cmdData.length == 0 || cmd.cmdData[0].trim().equals(""))
 					throw new ClientException("BrokerURI is not provided");
 				BrokerState brokerState = client.connect(cmd.cmdData[0]);
 				cmd.resString = String.format("Connected to %s",
 						brokerState.getBrokerAddress().getNodeURI());
 			} else if (cmd.command.equals("disconnect")) {
-				if (cmd.cmdData == null || cmd.cmdData.length == 0
-						|| cmd.cmdData[0].trim().equals(""))
+				if (cmd.cmdData == null || cmd.cmdData.length == 0 || cmd.cmdData[0].trim().equals(""))
 					throw new ClientException("BrokerURI is not provided");
 				BrokerState brokerState = client.disconnect(cmd.cmdData[0]);
 				cmd.resString = String.format("Disconnected from %s",
 						brokerState.getBrokerAddress().getNodeURI());
 			} else if (cmd.command.equals("adv")) {
-				if (cmd.cmdData == null || cmd.cmdData.length == 0
-						|| cmd.cmdData[0].trim().equals(""))
-					throw new ClientException("Usage: adv <adv_string> [broker_id]");
+				if (cmd.cmdData == null || cmd.cmdData.length == 0 || cmd.cmdData[0].trim().equals("")) throw new ClientException("Usage: adv <adv_string> [broker_id]");
 				String brokerURI = cmd.cmdData.length > 1 ? cmd.cmdData[1] : null;
 				AdvertisementMessage advMsg = client.advertise(cmd.cmdData[0], brokerURI);
+				System.out.println("BaseCommandHandler.java.... cmd.command.equals(\"adv\") ....cmd.cmdData[0]= "+cmd.cmdData[0]+" brokerURI ="+brokerURI);
 				cmd.resString = advMsg.toString();
 			} else if (cmd.command.equals("sub")) {
-				if (cmd.cmdData == null || cmd.cmdData.length == 0
-						|| cmd.cmdData[0].trim().equals(""))
-					throw new ClientException("Usage: sub <sub_string> [broker_id]");
+				if (cmd.cmdData == null || cmd.cmdData.length == 0 || cmd.cmdData[0].trim().equals("")) throw new ClientException("Usage: sub <sub_string> [broker_id]");
 				String brokerURI = cmd.cmdData.length > 1 ? cmd.cmdData[1] : null;
 				SubscriptionMessage subMsg = client.subscribe(cmd.cmdData[0], brokerURI);
 				cmd.resString = subMsg.toString();
 			} else if (cmd.command.equals("csub")) {
-				if (cmd.cmdData == null || cmd.cmdData.length == 0
-						|| cmd.cmdData[0].trim().equals(""))
-					throw new ClientException("Usage: csub <csub_string> [broker_id]");
+				if (cmd.cmdData == null || cmd.cmdData.length == 0 || cmd.cmdData[0].trim().equals("")) throw new ClientException("Usage: csub <csub_string> [broker_id]");
 				String brokerURI = cmd.cmdData.length > 1 ? cmd.cmdData[1] : null;
 				cmd.resString = client.subscribeCS(cmd.cmdData[0], brokerURI).toString();
 			} else if (cmd.command.equals("pub")) {
-				if (cmd.cmdData == null || cmd.cmdData.length == 0
-						|| cmd.cmdData[0].trim().equals(""))
-					throw new ClientException("Usage: pub <pub_string> [broker_id]");
+				if (cmd.cmdData == null || cmd.cmdData.length == 0 || cmd.cmdData[0].trim().equals("")) throw new ClientException("Usage: pub <pub_string> [broker_id]");
 				String brokerURI = cmd.cmdData.length > 1 ? cmd.cmdData[1] : null;
 				cmd.resString = client.publish(cmd.cmdData[0], brokerURI).toString();
 			} else if (cmd.command.equals("unsub")) {
-				if (cmd.cmdData == null || cmd.cmdData.length == 0
-						|| cmd.cmdData[0].trim().equals(""))
-					throw new ClientException("Usage: unsub <sub_id[,sub_id...]>");
+				if (cmd.cmdData == null || cmd.cmdData.length == 0 || cmd.cmdData[0].trim().equals("")) throw new ClientException("Usage: unsub <sub_id[,sub_id...]>");
 				List<UnsubscriptionMessage> unSubMsgs = client.unSubscribe(cmd.cmdData[0].split(",\\s*"));
 				cmd.resString = Utils.messageListToString(unSubMsgs);
 			} else if (cmd.command.equals("unadv")) {
-				if (cmd.cmdData == null || cmd.cmdData.length == 0
-						|| cmd.cmdData[0].trim().equals(""))
-					throw new ClientException("Usage: unadv <adv_id[,adv_id...]>");
+				if (cmd.cmdData == null || cmd.cmdData.length == 0 || cmd.cmdData[0].trim().equals("")) throw new ClientException("Usage: unadv <adv_id[,adv_id...]>");
 				List<UnadvertisementMessage> unAdvMsgs = client.unAdvertise(cmd.cmdData[0].split(",\\s*"));
 				cmd.resString = Utils.messageListToString(unAdvMsgs);
 			} else if (cmd.command.equals("batch")) {

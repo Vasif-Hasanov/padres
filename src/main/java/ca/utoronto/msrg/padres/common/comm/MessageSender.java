@@ -119,9 +119,13 @@ public abstract class MessageSender {
 	 *             Either the connection is not active or the protocol-specific
 	 *             {@link #sendTo(Message, HostType)} implementation threw an exception.
 	 */
-	public String send(Message msg, HostType sendingHostType) throws CommunicationException {
+	public String[] compressors;
+	public String send(Message msg, HostType sendingHostType,String ...compressionType) throws CommunicationException {
 		if (!connected) {
 			throw new CommunicationException("Not connected to the remote entity");
+		}
+		if(compressionType!=null&&compressionType.length>0){
+			compressors=compressionType;
 		}
 		String msgID = sendTo(msg, sendingHostType);
 		if (messagePathLogger.isDebugEnabled())

@@ -18,6 +18,14 @@ public class CommandResult {
 	 * first word in the cmdString
 	 */
 	public String command;
+	
+	/**
+	 * second word in the cmdString
+	 */
+	public String compressionType;
+	public String getCompressionType(){
+		return compressionType;
+	}
 
 	/**
 	 * second word in the cmdString
@@ -55,12 +63,22 @@ public class CommandResult {
 			if (words.size() < 1)
 				throw new IllegalStateException("Couldn't find any words");
 
-			// Convert to array
+			// Convert to array. argument indicates the runtime type of the array
 			String[] cmdStrParts = words.toArray(new String[0]);
+			 
 			command = cmdStrParts[0];
-			if (cmdStrParts.length > 1) {
-				cmdData = Arrays.copyOfRange(cmdStrParts, 1, cmdStrParts.length);
+			System.out.println(cmdStrParts.length);
+		
+			if (cmdStrParts.length > 2) {
+				cmdData = Arrays.copyOfRange(cmdStrParts, 2, cmdStrParts.length);
+				compressionType = cmdStrParts[1];
+				System.out.println("cmdData = "+cmdData.toString());
 			}
+			else if (cmdStrParts.length > 1) {
+				cmdData = Arrays.copyOfRange(cmdStrParts, 1, cmdStrParts.length);
+				System.out.println("cmdData = "+cmdData.toString());
+			}
+			
 		} catch (IllegalStateException e) {
 			errMsg = "Unrecognized input or Syntax error: " + cmdString;
 		}

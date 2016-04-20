@@ -58,8 +58,20 @@ public class CLIClient extends Client {
 	public void run() {
 		System.out.println("Use 'exit' or 'ctrl+d' to quit\n");
 		Console con = System.console();
+		if(con==null){
+			System.out.println(con);
+		}
 		while (true) {
-			String input = con.readLine(PROMPT, clientID);
+			String input;
+			if(con!=null){
+			 input = con.readLine(PROMPT, clientID);
+			}else{
+				input=clientID;
+			}
+			System.out.print("Enter something:");
+			
+			///String input = System.console().readLine();
+			
 			if (input == null) {
 				// got an EOF (Ctrl-D); exit the shell and quit probably we should quit the shell
 				// and put the broker in the background?
@@ -124,7 +136,8 @@ public class CLIClient extends Client {
 	 */
 	public static void main(String[] args) throws Exception {
 		try {
-			CommandLine cmdLine = new CommandLine(ClientConfig.getCommandLineKeys());
+			String[] commandKeys=	ClientConfig.getCommandLineKeys();
+			CommandLine cmdLine = new CommandLine(commandKeys);
 			cmdLine.processCommandLine(args);
 			String configFile = cmdLine.getOptionValue(ClientConfig.CLI_OPTION_CONFIG_FILE,
 					CONFIG_FILE_PATH);
@@ -136,7 +149,9 @@ public class CLIClient extends Client {
 			for (String brokerID : brokers.keySet()) {
 				System.out.printf("%s[%s] ", brokerID, brokers.get(brokerID));
 			}
+			
 			System.out.println();
+			
 			cliClient.run();
 		} catch (ClientException e) {
 			System.err.println(ANSI_RED + e.getMessage() + ANSI_NORMAL);
